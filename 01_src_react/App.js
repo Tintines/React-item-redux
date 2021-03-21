@@ -8,20 +8,20 @@ export default class App extends Component{
 
   //加法
   increment = ()=>{
-    let {value} = this.refs.selectNumber
+    let {value} = this.selectNumber.value
     let {count} = this.state
     this.setState({count:count+value*1})
   }
 
   //减法
   decrement = ()=>{
-    let {value} = this.refs.selectNumber
+    let {value} = this.selectNumber.value
     let {count} = this.state
     this.setState({count:count-value*1})
   }
 
   incrementIfOdd = ()=>{
-    let {value} = this.refs.selectNumber
+    let {value} = this.selectNumber.value
     let {count} = this.state
     if(count%2 === 1){
       this.setState({count:count+value*1})
@@ -29,7 +29,7 @@ export default class App extends Component{
   }
 
   incrementAsync = ()=>{
-    let {value} = this.refs.selectNumber
+    let {value} = this.selectNumber.value
     let {count} = this.state
     setTimeout(()=>{
       this.setState({count:count+value*1})
@@ -41,7 +41,7 @@ export default class App extends Component{
     return (
       <div>
         <h3>当前计数为{count}</h3>
-        <select ref="selectNumber">
+        <select ref={(selectNumber) => {this.selectNumber=selectNumber}}>
           <option value="1">1</option>
           <option value="2">2</option>
           <option value="3">3</option>
