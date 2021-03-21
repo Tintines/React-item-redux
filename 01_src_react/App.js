@@ -8,20 +8,20 @@ export default class App extends Component{
 
   //加法
   increment = ()=>{
-    let {value} = this.selectNumber.value
+    let {value} = this.selectNumber         // 值为数字型字符串
     let {count} = this.state
-    this.setState({count:count+value*1})
+    this.setState({count:count+value*1})    // 转数字
   }
 
   //减法
   decrement = ()=>{
-    let {value} = this.selectNumber.value
+    let {value} = this.selectNumber
     let {count} = this.state
     this.setState({count:count-value*1})
   }
 
   incrementIfOdd = ()=>{
-    let {value} = this.selectNumber.value
+    let {value} = this.selectNumber
     let {count} = this.state
     if(count%2 === 1){
       this.setState({count:count+value*1})
@@ -29,7 +29,7 @@ export default class App extends Component{
   }
 
   incrementAsync = ()=>{
-    let {value} = this.selectNumber.value
+    let {value} = this.selectNumber
     let {count} = this.state
     setTimeout(()=>{
       this.setState({count:count+value*1})

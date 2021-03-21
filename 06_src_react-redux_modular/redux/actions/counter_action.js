@@ -6,9 +6,9 @@ export const createIncrementAction = value=>({type:INCREMENT,data:value})
 export const createDecrementAction = value=>({type:DECREMENT,data:value})
 
 //创建一个异步的action，用于增加
-export const createIncrementAsyncAction = (value,delay)=> {
-  return (dispatch)=>{
-    setTimeout(()=>{
+export const createIncrementAsyncAction = (value, delay)=> {
+  return (dispatch)=>{      // 必须return (dispatch)=>{ } 回调函数
+    setTimeout(()=>{        // 模拟异步
       dispatch(createIncrementAction(value))
     },delay)
   }

@@ -8,39 +8,40 @@ export default class Counter extends Component{
 
   //加法
   increment = ()=>{
-    let {value} = this.refs.selectNumber
+    let {value} = this.selectNumber
     //this.props.store.dispatch(createIncrementAction(value*1))
-    this.props.increment(value*1)
+    this.props.increment(value*1)       // 向壳拿
   }
 
   //减法
   decrement = ()=>{
-    let {value} = this.refs.selectNumber
+    let {value} = this.selectNumber
     this.props.decrement(value*1)
   }
 
   incrementIfOdd = ()=>{
-    let {value} = this.refs.selectNumber
-    let {count} = this.props
+    let {value} = this.selectNumber
+    // let count = this.props.store.getState()     // 调用getState()获取store中的数据
+    let {count} = this.props        // 直接向壳拿
     if(count%2 === 1){
       this.props.increment(value*1)
     }
   }
 
   incrementAsync = ()=>{
-    let {value} = this.refs.selectNumber
+    let {value} = this.selectNumber
     setTimeout(()=>{
       this.props.increment(value*1)
    },1000)
   }
 
   render(){
-    //let {count} = this.state
-    //let count = this.props.store.getState()
+    //let {count} = this.state                  // 数据在自己这时
+    //let count = this.props.store.getState()   // 数据在store且没经过 react-redux 管理时
     return (
       <div>
         <h3>当前计数为{this.props.count}</h3>
-        <select ref="selectNumber">
+        <select ref={(selectNumber)=>{this.selectNumber=selectNumber}}>
           <option value="1">1</option>
           <option value="2">2</option>
           <option value="3">3</option>

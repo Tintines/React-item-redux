@@ -8,18 +8,18 @@ export default class Counter extends Component{
 
   //加法
   increment = ()=>{
-    let {value} = this.refs.selectNumber
+    let {value} = this.selectNumber
     this.props.increment(value*1)
   }
 
   //减法
   decrement = ()=>{
-    let {value} = this.refs.selectNumber
+    let {value} = this.selectNumber
     this.props.decrement(value*1)
   }
 
   incrementIfOdd = ()=>{
-    let {value} = this.refs.selectNumber
+    let {value} = this.selectNumber
     let {count} = this.props
     if(count%2 === 1){
       this.props.increment(value*1)
@@ -27,7 +27,7 @@ export default class Counter extends Component{
   }
 
   incrementAsync = ()=>{
-    let {value} = this.refs.selectNumber
+    let {value} = this.selectNumber
     this.props.incrementAsync(value*1,1000)
   }
 
@@ -35,7 +35,7 @@ export default class Counter extends Component{
     return (
       <div>
         <h3>当前计数为{this.props.count}</h3>
-        <select ref="selectNumber">
+        <select ref={(selectNumber)=>{this.selectNumber=selectNumber}}>
           <option value="1">1</option>
           <option value="2">2</option>
           <option value="3">3</option>
