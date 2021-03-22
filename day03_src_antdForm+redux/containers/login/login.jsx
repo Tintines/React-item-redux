@@ -1,20 +1,23 @@
-import React,{Component} from 'react'
-import {Form,Icon,Input,Button,message} from 'antd';
+import React, {Component} from 'react'
+import {Form, Icon, Input, Button, message} from 'antd';
+import {connect} from 'react-redux'
+import {createDemo1Action, createDemo2Action} from '../../redux/action_creators/test_action'
 import './css/login.less'
-import logo from './imgs/logo.png'      // jsx中引入图片方法, 必须先使用变量来接着
+import logo from './imgs/logo.png'    // jsx中引入图片方法, 必须先使用变量来接着
 
-const {Item} = Form     // 用于精简,Form表单项,原写法 <Form.Item/> ,现写法 <Item/>
-
+const {Item} = Form                   // 用于精简,Form表单项,原写法 <Form.Item/> ,现写法 <Item/>
+/* login 组件, 再经过antd包裹产生的新UI组件 */
 class Login extends Component{
   // 点击登录按钮的回调
   handleSubmit = (event)=>{
-    event.preventDefault();     //阻止表单默认事件--禁止form表单提交--需要自己通过ajax发送
+    event.preventDefault();           //阻止表单默认事件--禁止form表单提交--需要自己通过ajax发送
     /* 多表单项验证 */
     this.props.form.validateFields((err, values) => {
       if(!err){
-        alert('向服务器发送登录请求',values)    // 模拟发送数据
+        // alert('向服务器发送登录请求',values)    // 模拟发送数据
+        this.props.demo2('aibaba')
       }else{
-        message.error('表单输入有误，请检查！') // antd内部提示信息组件
+        message.error('表单输入有误，请检查！')    // antd内部提示信息组件
       }
     });
   }
@@ -41,7 +44,7 @@ class Login extends Component{
       <div className="login"> 
         <header>
           <img src={logo} alt="logo"/>
-          <h1>商品管理系统</h1>
+          <h1>商品管理系统{this.props.test}</h1>
         </header>
         <section>
           <h1>用户登录</h1>
@@ -98,14 +101,26 @@ class Login extends Component{
     )
   }
 }
-
 /* 严重注意：
     1.暴露的根本不是我们定义的Login组件，而是经过加工（包装）的Login组件。
     2.Form.create()调用返回一个函数，该函数加工了Login组件，生成了一个新组件，
       新组件实例对象的props多了一个强大的form属性，能完成验证。
     3.我们暴露出去的不再是Login，而是通过Login生成的一个新组件。 
 */
-export default Form.create()(Login)
+// export default Form.create()(Login) // 壳容器组件字节在下方,就不需要再进行暴露了
+
+
+/* 连接 antd包裹login产生的新组件的 和其对应的壳 容器组件  */
+/* 相当于找react-redux 生成一个壳容器组件,接收数据, 再将数据挂载到props属性上的方式,传递给壳内UI组件!!! */
+export default connect(
+  /* 控制状态, UI组件需要啥传啥 */
+  state => ({test: state.test}),    // 直接和store管理产生修改state的reducer联系,再传递子组件
+  /* 控制方法, UI组件需要啥方法传啥方法 */
+  {
+    demo1: createDemo1Action,       // 直接和actioncreator联系,再传递子组件
+    demo2: createDemo2Action
+  }
+)(Form.create()(Login))             // 使用这里连接不是直接的login组件,得是那个经过 antd包裹后返回的那个新的UI组件
 
 /* 
   总结：
