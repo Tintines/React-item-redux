@@ -4,3 +4,12 @@
 若项目上线，需要配置成真正服务器的地址!!!!! */
 // export const BASE_URL = 'http://localhost:3000'      // 上线时修改成这样
 export const BASE_URL = ''      // 开发配置
+
+/* 百度天气接口的key, 需要花钱买接口密匙ak, 可能随时更改,所以配置到配置文件中!! */
+// export const WEATHER_AK = '3p49MVra6urFRGOT9s8UBWr2'
+
+/* 找的免费天气接口 */
+// http://wthrcdn.etouch.cn/weather_mini?city=西安
+
+/* 当前城市名 */ /* 问题: 如何自动获取当前所在城市? */
+export const CITY = '西安'

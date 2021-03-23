@@ -64,7 +64,8 @@ class Login extends Component{
                 <header>
                     {/* alt 属性要写上 */}
                     <img src={logo} alt="logo"/>
-                    <h1>商品管理系统</h1>
+                    {/* <h1>商品管理系统</h1> */}
+                    <span>商品管理系统</span>
                 </header>
                 <section>
                     <h1>用户登录</h1>

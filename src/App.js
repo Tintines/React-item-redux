@@ -11,10 +11,10 @@ export default class App extends Component{
           <Switch>
               <Route path="/login" component={Login}/>
               <Route path="/admin" component={Admin}/>
-              {/* 重定向至admin时,当用户登录过,将会少跳转次 */}
+              {/* 重定向至admin时,当用户登录过,再次输入地址,可不需要跳转到login页面后再进行跳转,
+              选好重定向页面将会少跳转一次 */}
               <Redirect to="/admin"/>
           </Switch>
-
       </div>
     )
   }
