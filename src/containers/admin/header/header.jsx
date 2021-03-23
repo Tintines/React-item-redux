@@ -2,19 +2,21 @@ import React,{Component} from 'react'
 import {connect} from 'react-redux'
 import {Icon,Button,Modal} from 'antd'
 import screenfull from 'screenfull'
-
+/* 在非路由组件中，要使用路由组件的api */
+import {withRouter} from 'react-router-dom' 
 import {createDeleteUserInfoAction} from '../../../redux/action_creators/login_action'
 
 import './header.less'
 import dayjs from 'dayjs'
 import { reqWeather } from '../../../api'
 
-const {confirm} = Modal;
+const {confirm} = Modal;    // 结构赋值,得到modal中confirm方法
 
 @connect(
     state => ({userInfo: state.userInfo}),
     {deleteUser: createDeleteUserInfoAction}
 )
+@withRouter   // 将Header使用withRouter进行包装一次, 就可以通过this.props读取到路由身上的那些属性和方法了
 class Header extends Component{
     /* 不需要和redux交互时, 就尽量将状态数据维护在当前组件中! */
     state = {
@@ -78,6 +80,8 @@ class Header extends Component{
         let {user} = this.props.userInfo;
         let {isFull, date} = this.state;
         let {temperature_high,temperature_low, weather} = this.state.weatherInfo;
+        /* 在非路由组件中获取参数 */
+        let {pathname} = this.props.location;
         return (
             <header className="header">
                 <div className="header-top">
@@ -91,7 +95,7 @@ class Header extends Component{
                 </div>
                 <div className="header-bottom">
                     <div className="header-bottom-left">
-                        admin
+                        {pathname}
                     </div>
                     <div className="header-bottom-right">
                         {date}
