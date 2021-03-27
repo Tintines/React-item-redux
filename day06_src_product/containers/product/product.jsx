@@ -2,19 +2,23 @@ import React,{Component} from 'react'
 import {connect} from 'react-redux'
 import {Card, Button, Select, Input, Icon, message, Table} from 'antd'
 import {createSaveProductAction} from '../../redux/action_creators/product_action'
+import {createSavePagenumbAction} from '../../redux/action_creators/pagenumb_action'
 import {reqProductList, reqUpdateProdStatus, reqSearchProduct} from '../../api'
 import { PAGE_SIZE } from '../../config';
 
 const {Option} = Select;
 @connect(
-  state => ({}),
-  {saveProduct: createSaveProductAction}
+  state => ({pageNumb: state.pageNumb}),
+  {
+    saveProduct: createSaveProductAction,
+    saveNumb: createSavePagenumbAction
+  }
 )
 class Product extends Component{
   /* 初始化数据 */
   state = {
     productList: [],    // 商品列表数据(分页)
-    current: 1,         // 当前在哪一页
+    current: 0,         // 当前在哪一页
     total: '',          // 一共有几页
     keyWord: '',        // 搜索关键词
     searchType: 'productName'   // 搜索类型
@@ -27,9 +31,20 @@ class Product extends Component{
 
   /* 将初始化列表 和 搜索列表 扭在一起(通过一个标识量判别), 复用代码 */
   /* 真后端分页 */
-  getProductList = async (number=1)=>{      // 默认请求第一页
+  getProductList = async (number=this.state.current)=>{      // 默认请求第一页
     const {searchType, keyWord} = this.state;
     let result;
+    console.log(this.props.pageNumb);
+    console.log(number);
+    /* 思路: 进入详情页后返回时需要调用之前所在页码传入函数进行调用.
+      正常点击时,按照正常的逻辑显示对应的页码.此时也需要将当前页码存到redux中
+      当进入其他路由返回时,只需要取出之前存的最后一次的页码,仅使用一次作为参数调用函数发送对应的页码请求,
+      这是就去需要设定刚好路由卸载后又重新加载时,让参数从redux中读取参数,其余情况正常读取点击对应页码所获的
+      参数. 通过当前current初始为0, redux里面初始为1 即可解决第一次加载读取redux发送页码1的请求,又可切换路由读取之前保存的争取的页码
+      if(!this.state.current) number=this.props.pageNumb    两个初始值,配合该条语句即可解决
+      即 当前current为0没有值的时候,从redux中读数据;当前有数据时使用当前数据作为页码!!!! (强制刷新GG正常)*/
+    if(!this.state.current) number=this.props.pageNumb;
+
     /* 由于后端接口 keyWord 为非必要字段,当不进行传参时, 应该默认返回初始状态数据 */
     if(this.isSearch) result = await reqSearchProduct(number, PAGE_SIZE, searchType, keyWord)
     else result = await reqProductList(number, PAGE_SIZE)
@@ -38,10 +53,14 @@ class Product extends Component{
       this.setState({
         productList: data.list,
         total: data.total,
-        current: data.pageNum     // 当前页码
+        current: data.pageNum     // 当前页码就保存服务器返回的页码!!!,且分页器就读这里面的数据以展示当前页码
+        /* 问题就转变成 怎样获取正确页码 发送给服务器的问题啦(服务器返回的是正确的页码)!!! */
       })
+      /* 将页码存入redux */
+      this.props.saveNumb(data.pageNum)
+
       /* 将获取的商品列表存入redux中,当后续需要时直接从redux中获取, 就不必向服务器重新发请求请求数据了 */
-      this.props.saveProduct(data.list);
+      this.props.saveProduct(data.list)
     }
     else message.error('获取商品列表失败')
   }
@@ -132,7 +151,7 @@ class Product extends Component{
           return (
             <div>
               <Button type="link" onClick={()=>{this.props.history.push(`/admin/prod_about/product/detail/${item._id}`)}}>商品详情</Button>
-              <Button type="link" onClick={()=>{this.props.history.push(`/admin/prod_about/product/add_update/5200505`)}}>修改详情</Button>
+              <Button type="link" onClick={()=>{this.props.history.push(`/admin/prod_about/product/add_update/${item._id}`)}}>修改详情</Button>
             </div>
           )
         }
@@ -170,7 +189,8 @@ class Product extends Component{
             total: this.state.total,
             pageSize: PAGE_SIZE,
             current: this.state.current,      // 当前第几页
-            onChange: this.getProductList     // 调用时自动携带点击时所对应的页码
+
+            onChange: this.getProductList        // 调用时自动携带点击时所对应的页码
           }}
         />
       </Card>

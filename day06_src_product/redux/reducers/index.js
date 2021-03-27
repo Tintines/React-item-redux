@@ -3,6 +3,7 @@ import loginReducer from './login_reducer'
 import menuReducer from './menu_reducer'
 import productReducer from './product_reducer'
 import categoryRecuder from './category_reducer'
+import pagenumbRecuder from './pagenumb_reducer'
 
 
 /* 整合所有的reducer汇总所有状态 */
@@ -11,5 +12,6 @@ export default combineReducers({
     userInfo: loginReducer,
     title: menuReducer,
     productList: productReducer,
-    categoryList:categoryRecuder,
+    categoryList: categoryRecuder,
+    pageNumb: pagenumbRecuder,
 })

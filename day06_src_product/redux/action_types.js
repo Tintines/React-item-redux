@@ -14,3 +14,6 @@ export const SAVE_PROD_LIST = 'save_prod_list'
 
 /* 保存商品分类 */
 export const SAVE_CATEGORY_LIST = 'save_category_list'
+
+/* 保存当前页码 */
+export const SAVE_PAGE_NUMB = 'save_page_numb'
