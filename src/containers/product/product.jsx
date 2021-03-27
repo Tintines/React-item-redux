@@ -151,7 +151,7 @@ class Product extends Component{
           return (
             <div>
               <Button type="link" onClick={()=>{this.props.history.push(`/admin/prod_about/product/detail/${item._id}`)}}>商品详情</Button>
-              <Button type="link" onClick={()=>{this.props.history.push(`/admin/prod_about/product/add_update/5200505`)}}>修改详情</Button>
+              <Button type="link" onClick={()=>{this.props.history.push(`/admin/prod_about/product/add_update/${item._id}`)}}>修改详情</Button>
             </div>
           )
         }
