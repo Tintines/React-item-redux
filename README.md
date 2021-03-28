@@ -61,6 +61,12 @@
 	1.返回的是一部分数据,需要请求时指明: 每页显示多少条,你在哪一页,交由服务器去进行数据切割
 	2.后台需要明确: a.每页显示多少条 b.你要哪一页, 同时后台返回数据一共有多少个用于交给前端进行显示
 
+### 富文本编辑器
 yarn add draft-js@0.11.2 draftjs-to-html@0.8.4 html-to-draftjs@1.4.0 react-draft-wysiwyg@1.13.2
 
 
+### day08 
+数据可视化
+	1). echarts(百度) ==> yarn add echarts echarts-for-react
+    2). g2(阿里) ==> yarn add bizCharts
+    3). d3(国外)

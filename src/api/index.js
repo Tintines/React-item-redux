@@ -76,3 +76,12 @@ export const reqUpdateProduct = (productObj)=> myAxios.post(`${BASE_URL}/manage/
 
 /* 请求删除图片(根据图片唯一名称进行删除) */
 export const reqDeletePicture = (name) =>myAxios.post(`${BASE_URL}/manage/img/delete`, {name})
+
+/* 请求所有角色列表 */
+export const reqRoleList = () => myAxios.get(`${BASE_URL}/manage/role/list`)
+
+/* 请求添加角色 */
+export const reqAddRole = ({roleName}) => myAxios.post(`${BASE_URL}/manage/role/add`, {roleName})
+
+/* 请求给角色授权 */  /* 在请求中添加授权时间戳 属性 */
+export const reqAuthRole = (roleObj)=> myAxios.post(`${BASE_URL}/manage/role/update`, {...roleObj, auth_time: Date.now()})
