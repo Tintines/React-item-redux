@@ -91,3 +91,9 @@ export const reqUserList = () => myAxios.get(`${BASE_URL}/manage/user/list`)
 
 /* 请求添加用户 */
 export const reqAddUser = (userObj) => myAxios.post(`${BASE_URL}/manage/user/add`, {...userObj})
+
+/* 删除指定用户 */
+export const reqDeleteUser = (userId) => myAxios.post(`${BASE_URL}/manage/user/delete`, {userId})
+
+/* 更改指定用户 */
+export const reqUpdateUser = (_id, values) => myAxios.post(`${BASE_URL}/manage/user/update`, {_id, ...values})

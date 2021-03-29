@@ -12,10 +12,12 @@ import Detail from '../product/datail'
 import AddUpdate from '../product/add_update'
 import User from '../user/user'
 import Role from '../role/role'
-import Bar from '../bar/bar'
-import Line from '../line/line'
-import Pie from '../pie/pie'
+import Bar from '../charts/bar'
+import Line from '../charts/line'
+import Pie from '../charts/pie'
 import LeftNav from './left_nav/left_nav'
+import NotFound from '../not-found/not-found'
+
 
 // 这里删除了antd中提供好的Header基础组件, 此处自定义的就可以了
 const {Footer, Sider, Content } = Layout;
@@ -37,6 +39,7 @@ class Admin extends Component{
                         <Header className="header">Header</Header>
                         <Content className="content">
                             <Switch>
+                                <Redirect from='/admin' to="/admin/home" exact/>       {/* 增加404对应修改 */}
                                 <Route path="/admin/home" component={Home}/>
                                 <Route path="/admin/prod_about/category" component={Category}/>
                                 {/* 此处要添加 exact 精确匹配,不然模糊匹配时就永远给展示下面在这个路由了 */}
@@ -49,8 +52,9 @@ class Admin extends Component{
                                 <Route path="/admin/charts/bar" component={Bar}/>
                                 <Route path="/admin/charts/line" component={Line}/>
                                 <Route path="/admin/charts/pie" component={Pie}/>
+                                <Route component={NotFound}/>   {/* 404页面 */}
                                 {/* 重定向 */}
-                                <Redirect to="/admin/home"/>
+                                {/* <Redirect to="/admin/home"/> */}
                             </Switch>
                         </Content>
                         <Footer className="footer">

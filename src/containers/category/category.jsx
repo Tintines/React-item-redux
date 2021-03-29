@@ -106,9 +106,9 @@ class Category extends Component{
         const {status, msg} = result;
         if(status===0){
             message.success('更新分类名称成功', 1);
-            this.getCategoryList();             // 后台没返回更新成功的数据,我们通过重新请求商品列表 来获取最新的数据
+            this.getCategoryList();              // 后台没返回更新成功的数据,我们通过重新请求商品列表 来获取最新的数据
             this.setState({visible: false});     // 隐藏弹窗
-            this.props.form.resetFields();      // 重置表单
+            this.props.form.resetFields();       // 重置表单
         }else{
             message.error(msg, 1);
         }
